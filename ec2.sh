@@ -33,7 +33,7 @@ aws ec2 create-security-group --group-name agile_data_science --description "Sec
 
 echo ""
 echo "Detecting external IP address ..."
-EXTERNAL_IP=`dig +short myip.opendns.com @resolver1.opendns.com`
+EXTERNAL_IP=`curl ipinfo.io/ip`
 
 echo "Authorizing port 22 to your external IP ($EXTERNAL_IP) in security group 'agile_data_science' ..."
 aws ec2 authorize-security-group-ingress --group-name agile_data_science --protocol tcp --cidr $EXTERNAL_IP/32 --port 22

@@ -88,7 +88,6 @@ aws ec2 run-instances \
     --key-name agile_data_science \
     --user-data file://aws/ec2_bootstrap.sh \
     --instance-type r3.large \
-    --ebs-optimized \
     --block-device-mappings '{"DeviceName":"/dev/sda1","Ebs":{"DeleteOnTermination":true,"VolumeSize":1024}}' \
     --count 1 \
 | jq .ReservationId | tr -d '"' > .reservation_id

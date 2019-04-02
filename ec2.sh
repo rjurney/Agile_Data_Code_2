@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-LOG_FILE="/tmp/ec2.sh.log"
+LOG_FILE="/var/log/ec2.sh.log"
 echo "Logging operations to '$LOG_FILE' ..."
 
 echo "" | tee -a $LOG_FILE # first echo replaces previous log output, other calls append
@@ -85,7 +85,7 @@ echo "Determining the image ID to use according to region..." | tee -a $LOG_FILE
 case $DEFAULT_REGION in
   ap-south-1) UBUNTU_IMAGE_ID=ami-94e4b5fb
   ;;
-  us-east-1) UBUNTU_IMAGE_ID=ami-28516d52
+  us-east-1) UBUNTU_IMAGE_ID=ami-0a313d6098716f372
   ;;
   ap-northeast-1) UBUNTU_IMAGE_ID=ami-49640b2f
   ;;
@@ -105,7 +105,7 @@ case $DEFAULT_REGION in
   ;;
   us-west-2) UBUNTU_IMAGE_ID=ami-70873908
   ;;
-  us-east-2) UBUNTU_IMAGE_ID=ami-6a5f6a0f
+  us-east-2) UBUNTU_IMAGE_ID=ami-0c55b159cbfafe1f0
   ;;
   eu-west-2) UBUNTU_IMAGE_ID=ami-261a0042
   ;;

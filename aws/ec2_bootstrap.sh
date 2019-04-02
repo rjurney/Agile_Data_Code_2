@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Update and install critical packages
-LOG_FILE="/tmp/ec2_bootstrap.sh.log"
+LOG_FILE="/var/log/ec2_bootstrap.sh.log"
 echo "Logging to \"$LOG_FILE\" ..."
 
 echo "Installing essential packages via apt-get in non-interactive mode ..." | tee -a $LOG_FILE
@@ -57,21 +57,21 @@ sudo update-motd
 # Install Java and setup ENV
 #
 echo "Installing and configuring Java 8 from Oracle ..." | tee -a $LOG_FILE
-sudo add-apt-repository -y ppa:webupd8team/java
+# sudo add-apt-repository -y ppa:webupd8team/java
 sudo apt-get update
 echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 select true" | sudo debconf-set-selections
-sudo apt-get install -y oracle-java8-installer oracle-java8-set-default
+sudo apt-get install -y openjdk-8-jdk #oracle-java8-installer oracle-java8-set-default
 
-export JAVA_HOME=/usr/lib/jvm/java-8-oracle
-echo "export JAVA_HOME=/usr/lib/jvm/java-8-oracle" | sudo tee -a /home/ubuntu/.bash_profile
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+echo "export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64" | sudo tee -a /home/ubuntu/.bash_profile
 
 #
-# Install Miniconda
+# Install Anaconda
 #
 echo "Installing and configuring miniconda3 latest ..." | tee -a $LOG_FILE
-curl -Lko /tmp/Miniconda3-latest-Linux-x86_64.sh https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
-chmod +x /tmp/Miniconda3-latest-Linux-x86_64.sh
-/tmp/Miniconda3-latest-Linux-x86_64.sh -b -p /home/ubuntu/anaconda
+curl -Lko /tmp/Anaconda3-2018.12-Linux-x86_64.sh https://repo.anaconda.com/archive/Anaconda3-2018.12-Linux-x86_64.sh
+chmod +x /tmp/Anaconda3-2018.12-Linux-x86_64.sh
+/tmp/Anaconda3-2018.12-Linux-x86_64.sh -b -p /home/ubuntu/anaconda
 
 export PATH=/home/ubuntu/anaconda/bin:$PATH
 echo 'export PATH=/home/ubuntu/anaconda/bin:$PATH' | sudo tee -a /home/ubuntu/.bash_profile
@@ -82,14 +82,14 @@ sudo chgrp -R ubuntu /home/ubuntu/anaconda
 #
 # Install Clone repo, install Python dependencies
 #
-echo "Cloning https://github.com/rjurney/Agile_Data_Code_2 repository and installing dependencies ..." \
+echo "Cloning https://github.com/martindanielj/Agile_Data_Code_2 repository and installing dependencies ..." \
   | tee -a $LOG_FILE
 cd /home/ubuntu
-git clone https://github.com/rjurney/Agile_Data_Code_2
+git clone https://github.com/martindanielj/Agile_Data_Code_2
 cd /home/ubuntu/Agile_Data_Code_2
 export PROJECT_HOME=/home/ubuntu/Agile_Data_Code_2
 echo "export PROJECT_HOME=/home/ubuntu/Agile_Data_Code_2" | sudo tee -a /home/ubuntu/.bash_profile
-conda install -y python=3.5
+#conda install -y python=3.5
 conda install -y iso8601 numpy scipy scikit-learn matplotlib ipython jupyter
 pip install -r requirements.txt
 sudo chown -R ubuntu /home/ubuntu/Agile_Data_Code_2
@@ -130,11 +130,11 @@ sudo chgrp -R ubuntu /home/ubuntu/hadoop
 # Install Spark
 #
 echo "" | tee -a $LOG_FILE
-echo "Downloading and installing Spark 2.2.1 ..." | tee -a $LOG_FILE
-curl -Lko /tmp/spark-2.2.1-bin-without-hadoop.tgz http://apache.mirrors.lucidnetworks.net/spark/spark-2.2.1/spark-2.2.1-bin-hadoop2.7.tgz
+echo "Downloading and installing Spark 2.4.0 ..." | tee -a $LOG_FILE
+curl -Lko /tmp/spark-2.4.0-bin-without-hadoop.tgz https://archive.apache.org/dist/spark/spark-2.4.0/spark-2.4.0-bin-without-hadoop.tgz
 mkdir -p /home/ubuntu/spark
 cd /home/ubuntu
-tar -xvf /tmp/spark-2.2.1-bin-without-hadoop.tgz -C spark --strip-components=1
+tar -xvf /tmp/spark-2.4.0-bin-without-hadoop.tgz -C spark --strip-components=1
 
 echo "Configuring Spark 2.2.1 ..." | tee -a $LOG_FILE
 echo "" >> /home/ubuntu/.bash_profile
@@ -153,10 +153,9 @@ cp /home/ubuntu/spark/conf/spark-defaults.conf.template /home/ubuntu/spark/conf/
 echo 'spark.io.compression.codec org.apache.spark.io.SnappyCompressionCodec' | sudo tee -a /home/ubuntu/spark/conf/spark-defaults.conf
 
 # Give Spark 25GB of RAM, use Python3
-echo "spark.driver.memory 50g" | sudo tee -a $SPARK_HOME/conf/spark-defaults.conf
-echo "spark.executor.cores 12" | sudo tee -a $SPARK_HOME/conf/spark-defaults.conf
+echo "spark.driver.memory 25g" | sudo tee -a $SPARK_HOME/conf/spark-defaults.conf
 echo "PYSPARK_PYTHON=python3" | sudo tee -a $SPARK_HOME/conf/spark-env.sh
-echo "PYSPARK_DRIVER_PYTHON=python3" | sudo tee -a $SPARK_HOME/conf/spark-env.sh
+echo "PYSPARK_DRIVER_PYTHON=ipython" | sudo tee -a $SPARK_HOME/conf/spark-env.sh
 
 # Setup log4j config to reduce logging output
 cp $SPARK_HOME/conf/log4j.properties.template $SPARK_HOME/conf/log4j.properties
@@ -271,10 +270,10 @@ echo "spark.jars /home/ubuntu/Agile_Data_Code_2/lib/mongo-hadoop-spark-2.0.2.jar
 #
 echo "" | tee -a $LOG_FILE
 echo "Downloading and installing Kafka version 1.0.0 for Spark 2.11 ..." | tee -a $LOG_FILE
-curl -Lko /tmp/kafka_2.11-1.0.0.tgz http://apache.mirrors.lucidnetworks.net/kafka/1.0.0/kafka_2.11-1.0.0.tgz
+curl -Lko /tmp/kafka_2.11-0.10.1.1.tgz http://www-us.apache.org/dist/kafka/0.10.1.1/kafka_2.11-0.10.1.1.tgz
 mkdir -p /home/ubuntu/kafka
 cd /home/ubuntu/
-tar -xvzf /tmp/kafka_2.11-1.0.0.tgz -C kafka --strip-components=1 && rm -f /tmp/kafka_2.11-1.0.0.tgz
+tar -xvzf /tmp/kafka_2.11-0.10.1.1.tgz -C kafka --strip-components=1 && rm -f /tmp/kafka_2.11-0.10.1.1.tgz
 
 # Give to ubuntu
 echo "Giving Kafka to user ubuntu ..." | tee -a $LOG_FILE

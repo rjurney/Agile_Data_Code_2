@@ -26,3 +26,4 @@ wikipedia
 findspark
 iso8601
 notebook>=5.7.8
+pygments>=2.7.4 # not directly required, pinned by Snyk to avoid a vulnerability

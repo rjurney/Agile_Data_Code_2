@@ -26,3 +26,4 @@ wikipedia
 findspark
 iso8601
 notebook>=5.7.8
+flask-appbuilder>=3.3.0 # not directly required, pinned by Snyk to avoid a vulnerability

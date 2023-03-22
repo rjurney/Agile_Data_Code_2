@@ -8,9 +8,7 @@ Have problems? Please [file an issue](https://github.com/rjurney/Agile_Data_Code
 
 ## Deep Discovery
 
-Like my work? Want to work for me? I am Cofounder / CTO of Deep Discovery [deepdiscovery.ai](https://deepdiscovery.ai), an AI startup founded to fight financial crime and empower journalists to nail crooked politicians to the wall by analyzing the business networks surrounding corruption.
-
-![Deep Discovery Logo](images/DeepDiscoveryTechnicalLogo.png)
+Like my work? Connect with me [on LinkedIn](https://linkedin.com/in/russelljurney)!
 
 ## Installation and Execution
 

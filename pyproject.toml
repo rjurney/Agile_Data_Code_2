@@ -19,7 +19,7 @@ ipython = "^7.28.0"
 confluent-kafka = {extras = ["avro", "json", "protobuf"], version = "^1.7.0"}
 matplotlib = "^3.4.3"
 seaborn = "^0.11.2"
-pymongo = "^3.12.1"
+pymongo = "^4.6.3"
 scipy = "^1.7.1"
 numpy = "^1.21.3"
 selenium = "^4.0.0"

@@ -2,7 +2,9 @@
 
 This repository contains the updated sourcec code for [Agile Data Science 2.0](http://shop.oreilly.com/product/0636920051619.do), O'Reilly 2017. Now available at the [O'Reilly Store](http://shop.oreilly.com/product/0636920051619.do), on [Amazon](https://www.amazon.com/Agile-Data-Science-2-0-Applications/dp/1491960116) (in Paperback and Kindle) and on [O'Reilly Safari](https://www.safaribooksonline.com/library/view/agile-data-science/9781491960103/). Also available anywhere technical books are sold!
 
-It was last updated to a fully running version in late October, 2021. You should refer to the Jupyter Notebooks in this repository rather than the book's source code, which is badly outdated and will no longer work for you.
+NOTE: THE BOOK'S CODE IS OLD, BUT THE CODE IS MAINTAINED. USE DOCKER COMPOSE AND THE NOTEBOOKS IM THIS REPOSITORY.
+
+You should refer to the Jupyter Notebooks in this repository rather than the book's source code, which is badly outdated and will no longer work for you.
 
 Have problems? Please [file an issue](https://github.com/rjurney/Agile_Data_Code_2/issues)!
 

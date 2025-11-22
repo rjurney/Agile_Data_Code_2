@@ -29,7 +29,7 @@ wikipedia = "^1.4.0"
 iso8601 = "^0.1.16"
 notebook = "^6.4.5"
 WTForms = "^2.3.3"
-scikit-learn = "^1.0"
+scikit-learn = "^1.5"
 avro = ">= 1.0"
 
 [tool.poetry.dev-dependencies]
